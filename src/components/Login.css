@@ -1,7 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,500&display=swap");
 .box-size {
   width: 400px;
-  height: auto;
+  min-height: 600px;
 }
 .paragraph {
-  font-size: 12px;
+  font-size: 0.8rem;
+}
+
+.fst-montserrat {
+  font-family: "Montserrat", sans-serif;
 }
