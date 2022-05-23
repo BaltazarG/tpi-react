@@ -3,7 +3,6 @@ import "./Query.css"
 
 const Query = () => {
 
-    console.log(inputConsole);
 
   return (
     <div>
@@ -19,7 +18,7 @@ const Query = () => {
                         <option value="">Urgencias</option></select>
                 </p>
                 <p><label> Ingrese su consulta </label></p>
-                <textarea id='inputConsole' className='inputQuery' name="comentarios" rows="10" cols="40" placeholder='Ingrese su consulta aqui...'></textarea>
+                <textarea className='inputQuery' name="comentarios" rows="10" cols="40" placeholder='Ingrese su consulta aqui...'></textarea>
                 <button>Enviar Consulta</button>
             </div>
             
