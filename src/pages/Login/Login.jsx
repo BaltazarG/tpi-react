@@ -1,7 +1,7 @@
 import "./Login.css";
 import { FaUserMd, FaUser } from "react-icons/fa";
 import { useState } from "react";
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const initialForm = {
   email: "",
@@ -13,14 +13,14 @@ const Login = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-  const handleForm = (e) => {
+  const handleForm = e => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
 
-  const validations = (e) => {
+  const validations = e => {
     // const regEmail =
     //   '/^(([^<>()[].,;:s@"]+(.[^<>()[].,;:s@"]+)*)|(".+"))@(([^<>()[].,;:s@"]+.)+[^<>()[].,;:s@"]{2,})$/i';
     // if (regEmail.test(form.email)) {
@@ -28,7 +28,7 @@ const Login = () => {
     // }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     validations();
     e.preventDefault();
   };
