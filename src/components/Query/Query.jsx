@@ -1,32 +1,58 @@
 import React, { useContext } from "react";
+import { useState } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import "./Query.css"
-const Query = () => {
+const initialForm = {
+  date: "",
+  specialty: "",
+  query: ""
+}
+const Query = ({onChangeQuery}) => {
+
+  const [inputText, setInputText] = useState("")
+  const [form, setForm] = useState(initialForm)
+  
+  const inputHandler = (event) => {
+    setInputText(event.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (inputText === "") {
+        console.log("no se puede agregar")     
+    }
+    else{
+      setInputText(inputText)
+    }
+    setForm(initialForm)
+    onChangeQuery(form)
+  }
 
   const { theme } = useContext(ThemeContext)
 
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className={ theme === "dark"
           ? "formulario-light label-light"
           : "formulario-dark label-dark"}>
           <p>
-            <label htmlFor="">
-              Nombre y Apellido: <input type="text" />{" "}
-            </label>
-          </p>
-          <p>
             <label>
-              Fecha de Consulta: <input type="date" />
+              Fecha de Consulta: <input type="date"
+              onChange={ (e) => setForm({...form, date: e.target.value})}
+              value={form.date}
+              />
             </label>
           </p>
           <p>
             <label htmlFor="">Seleccione especialidad:</label>
-            <select name="" id="">
-              <option value="">Kinesiologia</option>
-              <option value="">Pediatria</option>
-              <option value="">Urgencias</option>
+            <select name="" id="" 
+            onChange={ (e) => setForm({...form, specialty: e.target.value})}
+            value={form.specialty}
+            >
+              <option value="Kinesiologia">Kinesiologia</option>
+              <option value="Pediatria">Pediatria</option>
+              <option value="Urgencias">Urgencias</option>
             </select>
           </p>
           <p>
@@ -38,8 +64,10 @@ const Query = () => {
             rows="10"
             cols="40"
             placeholder="Ingrese su consulta aqui..."
+            value={form.query}
+            onChange={ (e) => setForm({...form, query: e.target.value})}
           ></textarea>
-          <button>Enviar Consulta</button>
+          <button type="submit" >Enviar Consulta</button>
         </div>
       </form>
     </>
