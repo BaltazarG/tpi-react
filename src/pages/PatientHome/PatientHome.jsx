@@ -1,26 +1,22 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import History from "../../components/History/History";
 import Navbar from "../../components/Navbar/Navbar";
 import Query from "../../components/Query/Query";
 import "./PatientHome.css";
 
 const PatientHome = () => {
+  const [form, setForm] = useState(null);
 
-  const [form, setForm] = useState(null)
-
-  const onFormCompleted = (formLoaded) => {
-    setForm(formLoaded)
-  } 
-
+  const onFormCompleted = formLoaded => {
+    setForm(formLoaded);
+  };
 
   return (
     <div className="w-100 d-flex align-items-center flex-column">
-      <Navbar />
       <div className="d-flex">
-        <Query onChangeQuery={onFormCompleted}/>
+        <Query onChangeQuery={onFormCompleted} />
         <History form={form} />
       </div>
-      
     </div>
   );
 };

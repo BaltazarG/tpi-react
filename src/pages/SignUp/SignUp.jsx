@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import "./Login.css";
+import "./SignUp.css";
 import { FcGoogle } from "react-icons/fc";
 import Logo from "../../assets/logo.png";
+import { Link } from "react-router-dom";
 
 const initialForm = {
+  fullName: "",
   email: "",
+  confirmEmail: "",
   password: "",
+  confirmPassword: "",
 };
 
 const LoginAlt = () => {
@@ -37,11 +41,21 @@ const LoginAlt = () => {
             onSubmit={handleSubmit}
             className="w-75 height-full d-flex flex-column justify-content-center gap-2"
           >
-            <h1 className="text-dark fw-bold fs-1">Login</h1>
+            <h1 className="text-dark fw-bold fs-1">Sign Up</h1>
             <p className="fs-6">
-              Bienvenido de nuevo! Por favor inicie sesion para continuar.
+              Bienvenido! Por favor registrese para continuar.
             </p>
-
+            <label htmlFor="FullNameo" className="fw-bold fs-6">
+              Nombre Completo
+            </label>
+            <input
+              type="text"
+              name="FullName"
+              value={form.fullName}
+              onChange={e => setForm({ ...form, fullName: e.target.value })}
+              placeholder="Ingresa tu nombre completo"
+              className="form-control"
+            />
             <label htmlFor="Email" className="fw-bold fs-6">
               Email
             </label>
@@ -53,8 +67,19 @@ const LoginAlt = () => {
               placeholder="Ingresa tu email"
               className="form-control"
             />
+            <label htmlFor="ConfirmEmail" className="fw-bold fs-6">
+              Confirme su email
+            </label>
+            <input
+              type="email"
+              name="ConfirmEmail"
+              value={form.confirmEmail}
+              onChange={e => setForm({ ...form, confirmEmail: e.target.value })}
+              placeholder="Confirme su email"
+              className="form-control"
+            />
             <label htmlFor="Password" className="fw-bold fs-6">
-              Password
+              Contraseña
             </label>
             <input
               type="password"
@@ -64,35 +89,37 @@ const LoginAlt = () => {
               placeholder="Ingresa tu contraseña"
               className="form-control"
             />
+            <label htmlFor="ConfirmPassword" className="fw-bold fs-6">
+              Confirme su contraseña
+            </label>
+            <input
+              type="password"
+              name="ConfirmPassword"
+              value={form.confirmPassword}
+              onChange={e =>
+                setForm({ ...form, confirmPassword: e.target.value })
+              }
+              placeholder="Confirme su contraseña"
+              className="form-control"
+            />
             <div className="d-flex justify-content-between mt-3 align-items-baseline">
-              <input type="checkbox" name="Remember" />
+              <input type="checkbox" name="Remember" className="d-none" />
               <label htmlFor="Remember"></label>
-              <p className="text-secondary fst-italic">Olvido su contraseña?</p>
+              <Link to="login" className="text-secondary">
+                Tienes una cuenta? Iniciar sesion
+              </Link>
             </div>
             <button
               className="w-100 p-3 fw-bold text-light bg-secondary rounded"
               type="submit"
             >
-              Iniciar sesion
-            </button>
-            <button
-              className="w-100 p-3 text-dark bg-light rounded fw-bold "
-              type="submit"
-            >
-              <FcGoogle /> Iniciar sesion con Google
+              Registrarse
             </button>
           </form>
         </div>
       </div>
       <div className="bg-dark w-50 height-100 d-flex justify-content-center align-items-center">
-        {/* <img src={Logo} alt="logo" /> */}
-        <h2 className="logo_text">
-          C<span className="logo_text_span">linica</span>
-        </h2>
-
-        <h2 className="logo_text">
-          G<span className="logo_text_span">eneral</span>
-        </h2>
+        <img src={Logo} alt="logo" />
       </div>
     </div>
   );

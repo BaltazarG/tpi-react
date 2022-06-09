@@ -1,12 +1,7 @@
 import React from "react";
-import Navbar from "../../components/Navbar/Navbar";
 
 const Account = () => {
-  return (
-    <>
-      <Navbar />
-    </>
-  );
+  return <>a</>;
 };
 
 export default Account;
