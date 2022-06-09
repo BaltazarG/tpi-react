@@ -31,6 +31,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<PatientHome />} />
+            <Route path="/dochome" element={<DocHome />} />
             <Route path="/cuenta" element={<Account />} />
             <Route path="*" element={<Error404 />} />
           </Routes>
