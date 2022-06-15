@@ -25,7 +25,7 @@ const History = ({ form }) => {
         <tbody>
           <tr>
             <th scope="row">1</th>
-            <td>date</td>
+            <td>{form.query}</td>
             <td>cons</td>
             <td>Respuesta medica</td>
           </tr>

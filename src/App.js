@@ -14,6 +14,7 @@ import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import PatientHome from "./pages/PatientHome/PatientHome";
 import Navbar from "./components/Navbar/Navbar";
+import DocHome from "./components/DocHome/DocHome";
 
 function App() {
   const { theme } = useContext(ThemeContext);
