@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import "./History.css";
 
-const History = ({ form }) => {
+const History = ({ form, clinicHistory, setClinicHistory }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -16,31 +16,21 @@ const History = ({ form }) => {
       >
         <thead>
           <tr>
-            <th scope="col">Consulta</th>
+            <th scope="col">#</th>
             <th scope="col">Fecha</th>
             <th scope="col">Consulta</th>
             <th scope="col">Diagnostico</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>{form.query}</td>
-            <td>cons</td>
-            <td>Respuesta medica</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>datos</td>
-            <td>con</td>
-            <td>Respuesta medica</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>datos</td>
-            <td>consul</td>
-            <td>Respuesta medica</td>
-          </tr>
+          {clinicHistory.map((el, index) => (
+            <tr key={index}>
+              <th scope="row">{index + 1}</th>
+              <td>{el.date}</td>
+              <td>{el.query}</td>
+              <td>Respuesta medica</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

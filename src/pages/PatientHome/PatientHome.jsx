@@ -5,17 +5,20 @@ import Query from "../../components/Query/Query";
 import "./PatientHome.css";
 
 const PatientHome = () => {
-  const [form, setForm] = useState(null);
+  const [clinicHistory, setClinicHistory] = useState([]);
 
-  const onFormCompleted = formLoaded => {
-    setForm(formLoaded);
+  const onAddToHistory = query => {
+    setClinicHistory([...clinicHistory, query]);
   };
 
   return (
     <div className="w-100 d-flex align-items-center flex-column">
       <div className="d-flex">
-        <Query onChangeQuery={onFormCompleted} />
-        <History form={form} />
+        <Query onAddToHistory={onAddToHistory} />
+        <History
+          clinicHistory={clinicHistory}
+          setClinicHistory={setClinicHistory}
+        />
       </div>
     </div>
   );
