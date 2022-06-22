@@ -13,3 +13,31 @@ a {
 .btn {
   box-shadow: none !important;
 }
+
+.navdark {
+  background-color: #242629;
+}
+
+.navlight {
+  background-color: rgb(235, 235, 235);
+}
+
+.navb-light {
+  color: #61dafb;
+  transition: 0.19s;
+}
+
+.navb-light:hover {
+  color: #1b6074;
+  transition: 0.19s;
+}
+
+.navb-dark {
+  color: #00bcdd;
+  transition: 0.19s;
+}
+
+.navb-dark:hover {
+  color: #136979;
+  transition: 0.19s;
+}

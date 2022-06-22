@@ -15,8 +15,8 @@ const Navbar = () => {
     <div
       className={
         theme === "light"
-          ? "bg-dark w-100 border-bottom border-primary border-2"
-          : "bg-light w-100 border-bottom border-primary border-2"
+          ? "navlight w-100 border-bottom border-primary border-2"
+          : "navdark w-100 border-bottom border-primary border-2"
       }
     >
       <div className="w-100 d-flex container justify-content-between align-items-baseline p-3">
@@ -26,8 +26,8 @@ const Navbar = () => {
         <nav
           className={
             theme === "dark"
-              ? "navbar navbar-expand-lg navbar-light"
-              : "navbar navbar-expand-lg navbar-dark"
+              ? "navbar navbar-expand-lg"
+              : "navbar navbar-expand-lg"
           }
         >
           <div className="container-fluid">
@@ -44,19 +44,27 @@ const Navbar = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav align-items-baseline">
-                {/* Todo ver ACTIVE */}
-                <Link to="/" className="nav-link fw-bold">
+                <Link
+                  to="/"
+                  className={
+                    theme === "dark"
+                      ? "nav-link fw-bold navb-light"
+                      : "nav-link fw-bold navb-dark"
+                  }
+                >
                   Home
                 </Link>
-                <Link to="/cuenta" className="nav-link fw-bold">
+                <Link
+                  to="/cuenta"
+                  className={
+                    theme === "dark"
+                      ? "nav-link fw-bold navb-light"
+                      : "nav-link fw-bold navb-dark"
+                  }
+                >
                   Mi perfil
                 </Link>
-                <button
-                  className={
-                    theme === "dark" ? "btn text-dark" : "btn text-light"
-                  }
-                  onClick={handleTheme}
-                >
+                <button className="btn text-primary" onClick={handleTheme}>
                   <BsFillMoonFill />
                 </button>
               </div>
