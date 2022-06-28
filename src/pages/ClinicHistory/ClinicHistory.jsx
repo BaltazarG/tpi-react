@@ -1,6 +1,10 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
+import { useEffect } from "react";
+
+import { AuthContext } from "../../context/AuthContext";
 import { ThemeContext } from "../../context/ThemeContext";
+import "./ClinicHistory.css";
 
 const specialties = [
   "Kinesiologia",
@@ -13,15 +17,28 @@ const specialties = [
   "Oncología",
 ];
 
-const DocHome = () => {
-  const { theme } = useContext(ThemeContext);
-  const [modalData, setModalData] = useState({});
+const ClinicHistory = () => {
   const [clinicHistory, setClinicHistory] = useState([]);
+  const { user, token } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
+
+  const [modalData, setModalData] = useState({});
+
+  const onSetModalValues = el => {
+    setModalData({
+      specialty: specialties[el.doctorId - 1],
+      title: el.title,
+      description: el.description,
+      status: el.statusQuery,
+      date: el.createdAt,
+      diagnostico: "",
+    });
+  };
 
   useEffect(() => {
     axios
       .get(
-        `https://localhost:7139/api/doctors/${localStorage.getItem(
+        `https://localhost:7139/api/patients/${localStorage.getItem(
           "user"
         )}/queries`,
         {
@@ -33,17 +50,6 @@ const DocHome = () => {
 
       .then(res => setClinicHistory(res.data));
   }, []);
-
-  const onSetModalValues = async el => {
-    setModalData({
-      specialty: specialties[el.doctorId - 1],
-      title: el.title,
-      description: el.description,
-      status: el.statusQuery,
-      date: el.createdAt,
-      diagnostico: "",
-    });
-  };
   return (
     <div className="w-100 d-flex align-items-center flex-column justify-content-center">
       <div className="d-flex w-100">
@@ -57,12 +63,12 @@ const DocHome = () => {
           <thead>
             <tr className=" w-100 gap-2 ">
               <th scope="col">#</th>
-              <th scope="col">Paciente</th>
+              <th scope="col">Fecha</th>
 
+              <th scope="col">Asunto</th>
               <th scope="col">Estado</th>
-
               <th scope="col" className="text-center">
-                Historial Clinico
+                Consulta
               </th>
             </tr>
           </thead>
@@ -70,10 +76,9 @@ const DocHome = () => {
             {clinicHistory.map((el, index) => (
               <tr key={el.id}>
                 <th scope="row">{index + 1}</th>
-                <td>{el.pacient}</td>
-                <td>{el.statusQuery}</td>
+                <td>{el.createdAt}</td>
                 <td>{el.title}</td>
-
+                <td>{el.statusQuery}</td>
                 <td className="text-center">
                   <button
                     onClick={() => onSetModalValues(el)}
@@ -150,4 +155,4 @@ const DocHome = () => {
   );
 };
 
-export default DocHome;
+export default ClinicHistory;

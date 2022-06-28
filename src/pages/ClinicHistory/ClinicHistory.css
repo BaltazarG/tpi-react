@@ -1,0 +1,22 @@
+.formulario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: beige;
+  width: 500px;
+  height: 550px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.inputQuery {
+  text-align: left;
+  width: 70%;
+  height: 70%;
+  padding: 10px;
+}
+
+.hov:hover {
+  color: #fff !important;
+  background: rgb(54, 54, 54);
+}

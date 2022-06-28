@@ -1,32 +1,58 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Login.css";
 import { FcGoogle } from "react-icons/fc";
-import Logo from "../../assets/logo.png";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const initialForm = {
   email: "",
   password: "",
+  doctor: false,
 };
 
 const LoginAlt = () => {
   const [form, setForm] = useState(initialForm);
+  const navigate = useNavigate();
+  const { auth, setToken, setUser, setUserType, userType } =
+    useContext(AuthContext);
 
-  const validations = e => {
-    // const regEmail =
-    //   '/^(([^<>()[].,;:s@"]+(.[^<>()[].,;:s@"]+)*)|(".+"))@(([^<>()[].,;:s@"]+.)+[^<>()[].,;:s@"]{2,})$/i';
-    // if (regEmail.test(form.email)) {
-    //   setEmailError(true);
-    // }
-    const regPassword = "/^[a-zA-Z0-9_-]{8,12}$/";
+  useEffect(() => {
+    if (auth && userType === "patient") navigate("/consulta");
+    if (auth && userType === "doctor") navigate("/dochome");
+  }, [auth]);
 
-    if (regPassword.test(form.email)) {
-      console.log("a");
-    }
+  const handleAuth = async () => {
+    await axios
+      .post("https://localhost:7139/api/authentication/login", {
+        email: form.email,
+        password: form.password,
+        userType: form.doctor ? "doctor" : "patient",
+      })
+      .then(response => {
+        localStorage.setItem("token", response.data.token);
+        setToken(localStorage.getItem("token"));
+        localStorage.setItem("user", response.data.id);
+        setUser({
+          name: response.data.name,
+          lastName: response.data.lastName,
+          email: response.data.email,
+          id: response.data.id,
+        });
+        form.doctor
+          ? localStorage.setItem("userType", "doctor")
+          : localStorage.setItem("userType", "patient");
+        form.doctor ? setUserType("doctor") : setUserType("patient");
+      })
+      .catch(error => console.log(error));
   };
 
+  const handleDoctor = () => {
+    setForm({ ...form, doctor: !form.doctor });
+  };
   const handleSubmit = e => {
     e.preventDefault();
-    validations();
+    handleAuth();
   };
 
   return (
@@ -65,9 +91,13 @@ const LoginAlt = () => {
               className="form-control"
             />
             <div className="d-flex justify-content-between mt-3 align-items-baseline">
-              <input type="checkbox" name="Remember" />
-              <label htmlFor="Remember"></label>
-              <p className="text-secondary fst-italic">Olvido su contraseña?</p>
+              <p className="text-secondary fst-italic">Sos Medico?</p>
+              <input
+                type="checkbox"
+                name="Remember"
+                value={form.doctor}
+                onChange={handleDoctor}
+              />{" "}
             </div>
             <button
               className="w-100 p-3 fw-bold text-light bg-secondary rounded"

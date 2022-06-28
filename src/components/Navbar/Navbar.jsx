@@ -1,15 +1,29 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 import "./Navbar.css";
 import Logo from "../../assets/logo.png";
 import { BsFillMoonFill } from "react-icons/bs";
 import { ThemeContext } from "../../context/ThemeContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
   const { theme, setTheme } = useContext(ThemeContext);
+  const { auth, setToken, setUser, setUserType } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleTheme = () => {
     theme === "dark" ? setTheme("light") : setTheme("dark");
+  };
+
+  const onLogOut = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("userType");
+    setToken();
+    setUserType();
+    navigate("/login");
   };
   return (
     <div
@@ -45,14 +59,24 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav align-items-baseline">
                 <Link
-                  to="/"
+                  to="/consulta"
                   className={
                     theme === "dark"
                       ? "nav-link fw-bold navb-light"
                       : "nav-link fw-bold navb-dark"
                   }
                 >
-                  Home
+                  Consulta
+                </Link>
+                <Link
+                  to="/historial"
+                  className={
+                    theme === "dark"
+                      ? "nav-link fw-bold navb-light"
+                      : "nav-link fw-bold navb-dark"
+                  }
+                >
+                  Historial
                 </Link>
                 <Link
                   to="/cuenta"
@@ -64,8 +88,20 @@ const Navbar = () => {
                 >
                   Mi perfil
                 </Link>
-                <button className="btn text-primary" onClick={handleTheme}>
-                  <BsFillMoonFill />
+
+                <Link
+                  to="/login"
+                  className={
+                    theme === "dark"
+                      ? "nav-link fw-bold navb-light"
+                      : "nav-link fw-bold navb-dark"
+                  }
+                  onClick={onLogOut}
+                >
+                  Cerrar sesion
+                </Link>
+                <button className="btn" onClick={handleTheme}>
+                  <BsFillMoonFill className="text-primary" />
                 </button>
               </div>
             </div>

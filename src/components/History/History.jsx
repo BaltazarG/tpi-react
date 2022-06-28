@@ -24,10 +24,10 @@ const History = ({ form, clinicHistory, setClinicHistory }) => {
         </thead>
         <tbody>
           {clinicHistory.map((el, index) => (
-            <tr key={index}>
+            <tr key={el.id}>
               <th scope="row">{index + 1}</th>
-              <td>{el.date}</td>
-              <td>{el.query}</td>
+              <td>{el.createdAt}</td>
+              <td>{el.title}</td>
               <td>Respuesta medica</td>
             </tr>
           ))}

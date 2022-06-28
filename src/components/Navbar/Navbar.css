@@ -41,3 +41,11 @@ a {
   color: #136979;
   transition: 0.19s;
 }
+
+.navb-dark:focus {
+  color: #61dafb;
+}
+
+.navb-light:focus {
+  color: #61dafb;
+}
