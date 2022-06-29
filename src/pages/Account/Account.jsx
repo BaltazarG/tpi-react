@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ThemeContext } from "../../context/ThemeContext";
+import { useNavigate } from "react-router-dom";
 
 const initialForm = {
   name: "",
@@ -11,11 +12,11 @@ const initialForm = {
 };
 
 const Account = () => {
-  const { user, token } = useContext(AuthContext);
+  const { user, token, setUserType, setToken } = useContext(AuthContext);
   const { theme } = useContext(ThemeContext);
   const [profileData, setProfileData] = useState(null);
   const [editForm, setEditForm] = useState(initialForm);
-
+  const navigate = useNavigate();
   const onUpdateProfile = async () => {
     axios
       .put(
@@ -35,7 +36,16 @@ const Account = () => {
         console.log(res);
         onFetchProfile();
       })
-      .catch(err => console.log(err));
+      .catch(error => {
+        if (error.response.status === 401) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          localStorage.removeItem("userType");
+          setToken();
+          setUserType();
+          navigate("/login");
+        }
+      });
   };
 
   useEffect(() => {
@@ -59,6 +69,16 @@ const Account = () => {
           lastName: res.data.lastName,
           email: res.data.email,
         });
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          localStorage.removeItem("userType");
+          setToken();
+          setUserType();
+          navigate("/login");
+        }
       });
   };
 

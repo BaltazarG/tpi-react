@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { ThemeContext } from "../../context/ThemeContext";
 import "./NewQuery.css";
 
 const initialForm = {
@@ -11,9 +12,10 @@ const initialForm = {
 };
 
 const NewQuery = () => {
-  const [clinicHistory, setClinicHistory] = useState([]);
-  const { user, theme, token } = useContext(AuthContext);
   const [form, setForm] = useState(initialForm);
+  const { setToken, setUserType } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -42,7 +44,14 @@ const NewQuery = () => {
         console.log(response);
       })
       .catch(error => {
-        console.log(error);
+        if (error.response.status === 401) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          localStorage.removeItem("userType");
+          setToken();
+          setUserType();
+          navigate("/login");
+        }
       });
   };
 
@@ -51,13 +60,7 @@ const NewQuery = () => {
       <div className="d-flex w-100 align-items-center justify-content-center flex-column">
         <h2 className="text-primary">Realice una consulta</h2>
         <form onSubmit={handleSubmit}>
-          <div
-            className={
-              theme === "dark"
-                ? "formulario-light label-light border border-primary rounded d-flex w-100  align-items-center justify-content-between p-4 "
-                : "formulario-dark label-dark border border-primary border-2 rounded d-flex w-100  align-items-center justify-content-between p-4"
-            }
-          >
+          <div className="formulario-dark label-dark border border-primary border-2 rounded d-flex w-100  align-items-center justify-content-between p-4">
             <div className="d-flex w-100 justify-content-between">
               <label htmlFor="specialty">Seleccione una especialidad: </label>
               <select
@@ -66,14 +69,14 @@ const NewQuery = () => {
                 value={form?.specialty}
                 className="form-select-sm"
               >
-                <option value="1">Kinesiología</option>
-                <option value="2">Pediatría</option>
-                <option value="3">Traumatología</option>
-                <option value="4">Cardiología</option>
-                <option value="5">Dermatología</option>
-                <option value="6">Oftalmología</option>
-                <option value="7">Ginecología </option>
-                <option value="8">Oncología</option>
+                <option value="6">Kinesiología</option>
+                <option value="7">Pediatría</option>
+                <option value="8">Traumatología</option>
+                <option value="9">Cardiología</option>
+                <option value="10">Dermatología</option>
+                <option value="11">Oftalmología</option>
+                <option value="12">Ginecología </option>
+                <option value="13">Oncología</option>
               </select>
             </div>
             <div className="d-flex flex-column w-100 gap-3">
@@ -91,7 +94,7 @@ const NewQuery = () => {
               <label className="fs-6 "> Ingrese su consulta </label>
 
               <textarea
-                className="w-100 form-control"
+                className="w-100 form-control txt-area"
                 name="comentarios"
                 rows="10"
                 cols="40"

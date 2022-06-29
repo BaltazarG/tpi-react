@@ -7,9 +7,25 @@
 }
 
 .logo_text {
-  color: #bd0b1d;
+  color: #61dafb;
+  font-size: 44px;
+  font-weight: bold;
 }
 
 .logo_text_span {
   color: #f5f5f5;
+  font-size: 40px;
+}
+
+.responsive-login {
+  display: none!;
+}
+
+@media (max-width: 1100px) {
+  .responsive-login {
+    display: none !important;
+  }
+  .responsive-log {
+    width: 100% !important;
+  }
 }

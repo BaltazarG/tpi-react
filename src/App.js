@@ -16,6 +16,7 @@ import Navbar from "./components/Navbar/Navbar";
 import DocHome from "./components/DocHome/DocHome";
 import NewQuery from "./pages/NewQuery/NewQuery";
 import ClinicHistory from "./pages/ClinicHistory/ClinicHistory";
+import NavbarDoc from "./components/NavbarDoc/NavbarDoc";
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -38,15 +39,15 @@ function App() {
                 <Route path="/historial" element={<ClinicHistory />} />
 
                 <Route path="/cuenta" element={<Account />} />
-                <Route path="*" element={<Navigate to="/consulta" replace />} />
+                <Route path="*" element={<Navigate replace to="/consulta" />} />
               </Routes>
             </>
           ) : (
             <>
-              <Navbar />
+              <NavbarDoc />
               <Routes>
                 <Route path="/dochome" element={<DocHome />} />
-                <Route path="*" element={<Navigate to="/dochome" replace />} />
+                <Route path="*" element={<Navigate replace to="/dochome" />} />
               </Routes>
             </>
           )
@@ -58,34 +59,6 @@ function App() {
           </Routes>
         )}
       </Router>
-
-      {/* {auth && userType === "patient" ? (
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/consulta" element={<NewQuery />} />
-            <Route path="/historial" element={<ClinicHistory />} />
-
-            <Route path="/cuenta" element={<Account />} />
-            <Route path="*" element={<Navigate to="/consulta" replace />} />
-          </Routes>
-        </Router>
-      ) : auth && userType === "doctor" ? (
-        <Router>
-          <Routes>
-            <Route path="/dochome" element={<DocHome />} />
-            <Route path="*" element={<Navigate to="/dochome" replace />} />
-          </Routes>
-        </Router>
-      ) : (
-        <Router>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="*" element={<Navigate replace to="/login" />} />
-          </Routes>
-        </Router>
-      )} */}
     </div>
   );
 }

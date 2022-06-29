@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ThemeContext } from "../../context/ThemeContext";
 import "./ClinicHistory.css";
+import { useNavigate } from "react-router-dom";
 
 const specialties = [
   "Kinesiologia",
@@ -19,19 +20,20 @@ const specialties = [
 
 const ClinicHistory = () => {
   const [clinicHistory, setClinicHistory] = useState([]);
-  const { user, token } = useContext(AuthContext);
+  const { user, token, setToken, setUserType } = useContext(AuthContext);
   const { theme } = useContext(ThemeContext);
 
+  const navigate = useNavigate();
   const [modalData, setModalData] = useState({});
 
   const onSetModalValues = el => {
     setModalData({
-      specialty: specialties[el.doctorId - 1],
+      specialty: specialties[el.doctorId - 6],
       title: el.title,
       description: el.description,
       status: el.statusQuery,
-      date: el.createdAt,
-      diagnostico: "",
+      date: el.createdAt.slice(0, 10),
+      diagnostico: el.diagnostic,
     });
   };
 
@@ -48,7 +50,17 @@ const ClinicHistory = () => {
         }
       )
 
-      .then(res => setClinicHistory(res.data));
+      .then(res => setClinicHistory(res.data))
+      .catch(error => {
+        if (error.response.status === 401) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          localStorage.removeItem("userType");
+          setToken();
+          setUserType();
+          navigate("/login");
+        }
+      });
   }, []);
   return (
     <div className="w-100 d-flex align-items-center flex-column justify-content-center">
@@ -76,9 +88,17 @@ const ClinicHistory = () => {
             {clinicHistory.map((el, index) => (
               <tr key={el.id}>
                 <th scope="row">{index + 1}</th>
-                <td>{el.createdAt}</td>
+                <td>{el.createdAt.slice(0, 10)}</td>
                 <td>{el.title}</td>
-                <td>{el.statusQuery}</td>
+                <td
+                  className={
+                    el.statusQuery === "Pending"
+                      ? "status-pending"
+                      : "status-resolved"
+                  }
+                >
+                  {el.statusQuery}
+                </td>
                 <td className="text-center">
                   <button
                     onClick={() => onSetModalValues(el)}

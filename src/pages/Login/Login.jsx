@@ -57,7 +57,7 @@ const LoginAlt = () => {
 
   return (
     <div className="w-100 d-flex ">
-      <div className="bg-dark w-50 height-100 p-5 ">
+      <div className="bg-dark w-50 height-100 p-5 responsive-log">
         <div className="w-100 bg-light p-5 rounded height-full d-flex justify-content-center align-items-center">
           <form
             onSubmit={handleSubmit}
@@ -114,13 +114,13 @@ const LoginAlt = () => {
           </form>
         </div>
       </div>
-      <div className="bg-dark w-50 height-100 d-flex justify-content-center align-items-center">
+      <div className="bg-dark w-50 height-100 d-flex justify-content-center align-items-center responsive-login gap-2">
         {/* <img src={Logo} alt="logo" /> */}
         <h2 className="logo_text">
-          C<span className="logo_text_span">linica</span>
+          C<span className="logo_text_span">linica </span>
         </h2>
 
-        <h2 className="logo_text">
+        <h2 className="logo_text flex-end">
           G<span className="logo_text_span">eneral</span>
         </h2>
       </div>

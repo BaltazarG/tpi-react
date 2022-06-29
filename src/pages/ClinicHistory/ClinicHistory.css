@@ -20,3 +20,11 @@
   color: #fff !important;
   background: rgb(54, 54, 54);
 }
+
+.status-pending {
+  color: #f0ad4e;
+}
+
+.status-resolved {
+  color: #5cb85c;
+}

@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
-import "./Navbar.css";
+import "./NavbarDoc.css";
 import Logo from "../../assets/logo.png";
 import { BsFillMoonFill } from "react-icons/bs";
-import { HiMenuAlt3 } from "react-icons/hi";
 import { ThemeContext } from "../../context/ThemeContext";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+
+import { HiMenuAlt3 } from "react-icons/hi";
+
 import { AuthContext } from "../../context/AuthContext";
 
-const Navbar = () => {
+const NavbarDoc = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   const { auth, setToken, setUser, setUserType } = useContext(AuthContext);
 
@@ -59,43 +60,11 @@ const Navbar = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <Link
-                to="/consulta"
-                className={
-                  theme === "dark"
-                    ? "nav-link fw-bold navb-light navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
-                    : "nav-link fw-bold navb-dark navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
-                }
-              >
-                Consulta
-              </Link>
-
-              <Link
-                to="/historial"
-                className={
-                  theme === "dark"
-                    ? "nav-link fw-bold navb-light nav-item navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
-                    : "nav-link fw-bold navb-dark navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
-                }
-              >
-                Historial
-              </Link>
-              <Link
-                to="/cuenta"
-                className={
-                  theme === "dark"
-                    ? "nav-link fw-bold navb-light navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
-                    : "nav-link fw-bold navb-dark navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
-                }
-              >
-                Mi perfil
-              </Link>
-
-              <Link
                 to="/login"
                 className={
                   theme === "dark"
                     ? "nav-link fw-bold navb-light navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
-                    : "nav-link fw-bold navb-dark navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+                    : "nav-link fw-bold navb-light navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
                 }
                 onClick={onLogOut}
               >
@@ -112,4 +81,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarDoc;

@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
-  const [userType, setUserType] = useState("patient");
+  const [userType, setUserType] = useState("");
 
   useEffect(() => {
     if (token) {
