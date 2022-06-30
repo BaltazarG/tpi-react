@@ -5,12 +5,11 @@ import { BsFillMoonFill } from "react-icons/bs";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { ThemeContext } from "../../context/ThemeContext";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
   const { theme, setTheme } = useContext(ThemeContext);
-  const { auth, setToken, setUser, setUserType } = useContext(AuthContext);
+  const { setToken, setUserType } = useContext(AuthContext);
 
   const navigate = useNavigate();
 

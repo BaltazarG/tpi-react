@@ -28,3 +28,7 @@
 .status-resolved {
   color: #5cb85c;
 }
+
+.height-100-nav {
+  height: calc(100vh - 120px);
+}

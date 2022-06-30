@@ -11,7 +11,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 const NavbarDoc = () => {
   const { theme, setTheme } = useContext(ThemeContext);
-  const { auth, setToken, setUser, setUserType } = useContext(AuthContext);
+  const { setToken, setUserType } = useContext(AuthContext);
 
   const navigate = useNavigate();
 

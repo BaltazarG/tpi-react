@@ -9,7 +9,6 @@ import "./App.css";
 import { AuthContext } from "./context/AuthContext";
 import { ThemeContext } from "./context/ThemeContext";
 import Account from "./pages/Account/Account";
-import Error404 from "./pages/Error404/Error404";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import Navbar from "./components/Navbar/Navbar";

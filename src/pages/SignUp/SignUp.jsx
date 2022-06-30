@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-import Logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -21,7 +20,7 @@ const SignUp = () => {
     let regExpEmail = /\S+@\S+\.\S+/;
     let regExpPassword =
       /^(?=.*[a-z])(?=.*[a-zA-Z!#$%&? "])[a-zA-Z0-9!#$%&?]{8,14}$/;
-    let err = {};
+    let err = null;
     if (!form.name || form.name.length < 3) {
       err = await { ...err, name: true };
     }
@@ -53,22 +52,34 @@ const SignUp = () => {
         password: form.password,
       })
       .then(res => {
-        console.log(res);
         setErrors(null);
       })
       .catch(err => console.log(err));
   };
-
   const handleSubmit = e => {
     e.preventDefault();
-    onSetErrors();
-    !errors === null && onRegister();
+    let regExpEmail = /\S+@\S+\.\S+/;
+    let regExpPassword =
+      /^(?=.*[a-z])(?=.*[a-zA-Z!#$%&? "])[a-zA-Z0-9!#$%&?]{8,14}$/;
+
+    if (
+      form.email &&
+      form.password &&
+      regExpEmail.test(form.email) &&
+      regExpPassword.test(form.password) &&
+      form.password === form.confirmPassword &&
+      form.confirmEmail === form.email
+    ) {
+      return onRegister();
+    } else {
+      return onSetErrors();
+    }
   };
 
   return (
-    <div className="w-100 d-flex ">
-      <div className="bg-dark w-50 height-100 p-5 responsive-log">
-        <div className="w-100 bg-light p-5 rounded height-full d-flex justify-content-center align-items-center ">
+    <div className="w-100 d-flex height-signup">
+      <div className="bg-dark w-50  p-5 responsive-log height-signup">
+        <div className="w-100 bg-light p-5 rounded height-signup d-flex justify-content-center align-items-center ">
           <form
             onSubmit={handleSubmit}
             noValidate
@@ -197,7 +208,7 @@ const SignUp = () => {
             <div className="d-flex justify-content-between mt-3 align-items-baseline">
               <input type="checkbox" name="Remember" className="d-none" />
               <label htmlFor="Remember"></label>
-              <Link to="login" className="text-secondary">
+              <Link to="../login" className="text-secondary">
                 Tienes una cuenta? Iniciar sesion
               </Link>
             </div>
@@ -210,8 +221,14 @@ const SignUp = () => {
           </form>
         </div>
       </div>
-      <div className="bg-dark w-50 height-100 d-flex justify-content-center align-items-center responsive-login">
-        <img src={Logo} alt="logo" />
+      <div className="bg-dark w-50 height-100 d-flex justify-content-center align-items-center responsive-login gap-2">
+        <h2 className="logo_text">
+          C<span className="logo_text_span">linica </span>
+        </h2>
+
+        <h2 className="logo_text flex-end">
+          G<span className="logo_text_span">eneral</span>
+        </h2>
       </div>
     </div>
   );

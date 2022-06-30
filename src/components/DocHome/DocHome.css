@@ -1,3 +1,7 @@
 .txt-area {
   resize: none;
 }
+
+.height-100 {
+  height: calc(100vh - 120px);
+}
