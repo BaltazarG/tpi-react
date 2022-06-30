@@ -31,7 +31,7 @@ function App() {
     >
       <Router>
         {auth ? (
-          userType === "patient" ? (
+          localStorage.getItem("userType") === "patient" ? (
             <>
               <Navbar />
               <Routes>
@@ -43,13 +43,18 @@ function App() {
               </Routes>
             </>
           ) : (
-            <>
-              <NavbarDoc />
-              <Routes>
-                <Route path="/dochome" element={<DocHome />} />
-                <Route path="*" element={<Navigate replace to="/dochome" />} />
-              </Routes>
-            </>
+            localStorage.getItem("userType") === "doctor" && (
+              <>
+                <NavbarDoc />
+                <Routes>
+                  <Route path="/dochome" element={<DocHome />} />
+                  <Route
+                    path="*"
+                    element={<Navigate replace to="/dochome" />}
+                  />
+                </Routes>
+              </>
+            )
           )
         ) : (
           <Routes>

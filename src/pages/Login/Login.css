@@ -16,9 +16,12 @@
   color: #f5f5f5;
   font-size: 40px;
 }
-
-.responsive-login {
-  display: none!;
+.errormessage {
+  font-size: 14px;
+  font-weight: 400;
+  color: red;
+  padding: 0;
+  margin: 0;
 }
 
 @media (max-width: 1100px) {
@@ -27,5 +30,15 @@
   }
   .responsive-log {
     width: 100% !important;
+  }
+
+  .errormessage {
+    font-size: 14px;
+    font-weight: 400;
+    color: red;
+    padding: 0;
+    margin: 0;
+    width: 90%;
+    text-align: left;
   }
 }

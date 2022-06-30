@@ -13,6 +13,8 @@ const initialForm = {
 
 const LoginAlt = () => {
   const [form, setForm] = useState(initialForm);
+  const [error, setError] = useState(null);
+
   const navigate = useNavigate();
   const { auth, setToken, setUser, setUserType, userType } =
     useContext(AuthContext);
@@ -43,8 +45,9 @@ const LoginAlt = () => {
           ? localStorage.setItem("userType", "doctor")
           : localStorage.setItem("userType", "patient");
         form.doctor ? setUserType("doctor") : setUserType("patient");
+        setError(false);
       })
-      .catch(error => console.log(error));
+      .catch(error => setError("Usuario y/o contraseña no valido"));
   };
 
   const handleDoctor = () => {
@@ -52,7 +55,13 @@ const LoginAlt = () => {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    handleAuth();
+    let regExpEmail = /\S+@\S+\.\S+/;
+
+    if (form.email && form.password && regExpEmail.test(form.email)) {
+      return handleAuth();
+    } else {
+      return setError("Usuario y/o contraseña no valido");
+    }
   };
 
   return (
@@ -62,12 +71,13 @@ const LoginAlt = () => {
           <form
             onSubmit={handleSubmit}
             className="w-75 height-full d-flex flex-column justify-content-center gap-2"
+            noValidate
           >
             <h1 className="text-dark fw-bold fs-1">Login</h1>
             <p className="fs-6">
               Bienvenido de nuevo! Por favor inicie sesion para continuar.
             </p>
-
+            {error !== null && <p className="errormessage">{error}</p>}
             <label htmlFor="Email" className="fw-bold fs-6">
               Email
             </label>
@@ -80,7 +90,7 @@ const LoginAlt = () => {
               className="form-control"
             />
             <label htmlFor="Password" className="fw-bold fs-6">
-              Password
+              Contraseña
             </label>
             <input
               type="password"
@@ -91,7 +101,7 @@ const LoginAlt = () => {
               className="form-control"
             />
             <div className="d-flex justify-content-between mt-3 align-items-baseline">
-              <p className="text-secondary fst-italic">Sos Medico?</p>
+              <p className="text-secondary">Sos Medico?</p>
               <input
                 type="checkbox"
                 name="Remember"
@@ -99,6 +109,11 @@ const LoginAlt = () => {
                 onChange={handleDoctor}
               />{" "}
             </div>
+
+            {/* <Link to="signup" className="text-secondary">
+              No tienes una cuenta? Registrate
+            </Link> */}
+
             <button
               className="w-100 p-3 fw-bold text-light bg-secondary rounded"
               type="submit"
