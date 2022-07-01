@@ -1,12 +1,13 @@
 import axios from "axios";
 import "./ClinicHistory.css";
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ThemeContext } from "../../context/ThemeContext";
 
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
+import ModalHistory from "../../components/ModalHistory/ModalHistory";
 
 const specialties = [
   "Kinesiologia",
@@ -21,7 +22,7 @@ const specialties = [
 
 const ClinicHistory = () => {
   const [clinicHistory, setClinicHistory] = useState([]);
-  const { user, token, setToken, setUserType } = useContext(AuthContext);
+  const { setToken, setUserType } = useContext(AuthContext);
   const { theme } = useContext(ThemeContext);
   const [loader, setLoader] = useState(false);
 
@@ -39,7 +40,7 @@ const ClinicHistory = () => {
     });
   };
 
-  useEffect(() => {
+  const onFetchClinicHistory = useCallback(() => {
     setLoader(true);
     axios
       .get(
@@ -68,7 +69,11 @@ const ClinicHistory = () => {
           navigate("/login");
         }
       });
-  }, []);
+  }, [navigate, setToken, setUserType]);
+
+  useEffect(() => {
+    onFetchClinicHistory();
+  }, [onFetchClinicHistory]);
   return (
     <div className="w-100 d-flex align-items-center flex-column justify-content-center">
       {loader ? (
@@ -86,7 +91,7 @@ const ClinicHistory = () => {
               }
             >
               <thead>
-                <tr className=" w-100 gap-2 ">
+                <tr className=" w-100 gap-2">
                   <th scope="col">#</th>
                   <th scope="col">Fecha</th>
 
@@ -127,62 +132,15 @@ const ClinicHistory = () => {
               </tbody>
             </table>
 
-            <div
-              className="modal fade"
-              id="exampleModal"
-              tabIndex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">
-                      {modalData.title}
-                    </h5>
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    <p className="fs-6">
-                      <b>Fecha de creacion: </b>
-                      {modalData.date}
-                    </p>
-                    <p className="fs-6">
-                      <b>Consulta: </b>
-                      {modalData.description}
-                    </p>
-                    <p className="fs-6">
-                      <b>Departamento: </b>
-                      {modalData.specialty}
-                    </p>
-                    <p className="fs-6">
-                      <b>Estado: </b>
-                      {modalData.status}
-                    </p>
-                    {modalData.diagnostico && (
-                      <p className="fs-6">
-                        <b>Diagnostico: </b>
-                        {modalData.diagnostico}
-                      </p>
-                    )}
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      data-bs-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ModalHistory
+              title={modalData.title}
+              date={modalData.date}
+              description={modalData.description}
+              specialty={modalData.specialty}
+              status={modalData.status}
+              diagnostico={modalData.diagnostico}
+              isPatient={true}
+            />
           </div>
         </>
       )}

@@ -3,7 +3,6 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import { AuthContext } from "../../context/AuthContext";
-import { ThemeContext } from "../../context/ThemeContext";
 import "./NewQuery.css";
 
 const initialForm = {
@@ -16,17 +15,27 @@ const NewQuery = () => {
   const [form, setForm] = useState(initialForm);
   const { setToken, setUserType } = useContext(AuthContext);
   const [loader, setLoader] = useState(false);
+  const [queryState, setQueryState] = useState(null);
 
   const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    onSendForm();
+    if (form.description && form.title) {
+      setQueryState("Consulta realizada con exito");
+      onSendForm();
+    } else {
+      setQueryState("Error: vuelva a intenarlo mas tarde");
+    }
     setForm(initialForm);
+
+    setTimeout(() => {
+      setQueryState(null);
+    }, 3000);
   };
 
-  const onSendForm = async () => {
+  const onSendForm = () => {
     setLoader(true);
     axios
       .post(
@@ -71,6 +80,17 @@ const NewQuery = () => {
           <div className="w-100 d-flex align-items-center flex-column justify-content-center height">
             <div className="d-flex w-100 align-items-center justify-content-center flex-column">
               <h2 className="text-primary">Realice una consulta</h2>
+              {queryState && (
+                <p
+                  className={
+                    queryState === "Error: vuelva a intenarlo mas tarde"
+                      ? "text-danger p-0 m-0"
+                      : "text-success_ p-0 m-0"
+                  }
+                >
+                  {queryState}
+                </p>
+              )}
               <form onSubmit={handleSubmit}>
                 <div className="formulario-dark label-dark border border-primary border-2 rounded d-flex w-100  align-items-center justify-content-between p-4">
                   <div className="d-flex w-100 justify-content-between">

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Login.css";
-import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -24,11 +23,11 @@ const Login = () => {
   useEffect(() => {
     if (auth && userType === "patient") navigate("/consulta");
     if (auth && userType === "doctor") navigate("/dochome");
-  }, [auth]);
+  }, [auth, userType, navigate]);
 
-  const handleAuth = async () => {
+  const handleAuth = () => {
     setLoader(true);
-    await axios
+    axios
       .post("https://localhost:7139/api/authentication/login", {
         email: form.email,
         password: form.password,
@@ -79,8 +78,8 @@ const Login = () => {
         </div>
       ) : (
         <>
-          <div className="bg-dark w-50 p-5 responsive-log height-log">
-            <div className="w-100 bg-light p-5 rounded height-full d-flex justify-content-center align-items-center">
+          <div className="bg-dark w-50 p-5 responsive-log height-log ">
+            <div className="w-100 bg-light p-5 rounded height-full d-flex justify-content-center align-items-center ">
               <form
                 onSubmit={handleSubmit}
                 className="w-75 height-full d-flex flex-column justify-content-center gap-2"
@@ -135,12 +134,6 @@ const Login = () => {
                   type="submit"
                 >
                   Iniciar sesion
-                </button>
-                <button
-                  className="w-100 p-3 text-dark bg-light rounded fw-bold "
-                  type="submit"
-                >
-                  <FcGoogle /> Iniciar sesion con Google
                 </button>
               </form>
             </div>

@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { ThemeContext } from "../../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
+import { useCallback } from "react";
 
 const initialForm = {
   name: "",
@@ -13,14 +14,14 @@ const initialForm = {
 };
 
 const Account = () => {
-  const { user, token, setUserType, setToken } = useContext(AuthContext);
+  const { setUserType, setToken } = useContext(AuthContext);
   const { theme } = useContext(ThemeContext);
   const [profileData, setProfileData] = useState(null);
   const [editForm, setEditForm] = useState(initialForm);
   const [loader, setLoader] = useState(false);
 
   const navigate = useNavigate();
-  const onUpdateProfile = async () => {
+  const onUpdateProfile = () => {
     axios
       .put(
         `https://localhost:7139/api/patients/${localStorage.getItem("user")}`,
@@ -35,7 +36,7 @@ const Account = () => {
           },
         }
       )
-      .then(res => {
+      .then(() => {
         onFetchProfile();
       })
       .catch(error => {
@@ -50,11 +51,7 @@ const Account = () => {
       });
   };
 
-  useEffect(() => {
-    onFetchProfile();
-  }, []);
-
-  const onFetchProfile = () => {
+  const onFetchProfile = useCallback(() => {
     setLoader(true);
     axios
       .get(
@@ -85,7 +82,11 @@ const Account = () => {
           navigate("/login");
         }
       });
-  };
+  }, [setToken, setUserType, navigate]);
+
+  useEffect(() => {
+    onFetchProfile();
+  }, [onFetchProfile]);
 
   const onSubmit = e => {
     e.preventDefault();

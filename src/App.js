@@ -12,14 +12,14 @@ import Account from "./pages/Account/Account";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import Navbar from "./components/Navbar/Navbar";
-import DocHome from "./components/DocHome/DocHome";
 import NewQuery from "./pages/NewQuery/NewQuery";
 import ClinicHistory from "./pages/ClinicHistory/ClinicHistory";
 import NavbarDoc from "./components/NavbarDoc/NavbarDoc";
+import DoctorHome from "./pages/DoctorHome/DoctorHome";
 
 function App() {
   const { theme } = useContext(ThemeContext);
-  const { auth, userType } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
   return (
     <div
       className={
@@ -46,7 +46,7 @@ function App() {
               <>
                 <NavbarDoc />
                 <Routes>
-                  <Route path="/dochome" element={<DocHome />} />
+                  <Route path="/dochome" element={<DoctorHome />} />
                   <Route
                     path="*"
                     element={<Navigate replace to="/dochome" />}

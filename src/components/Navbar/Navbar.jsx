@@ -3,6 +3,7 @@ import "./Navbar.css";
 import Logo from "../../assets/logo.png";
 import { BsFillMoonFill } from "react-icons/bs";
 import { HiMenuAlt3 } from "react-icons/hi";
+import { BsFillSunFill } from "react-icons/bs";
 import { ThemeContext } from "../../context/ThemeContext";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -101,7 +102,11 @@ const Navbar = () => {
                 Cerrar sesion
               </Link>
               <button className="btn" onClick={handleTheme}>
-                <BsFillMoonFill className="fw-bold text-primary navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" />
+                {theme === "dark" ? (
+                  <BsFillSunFill className="fw-bold text-primary fs-6 navbar-nav-scroll" />
+                ) : (
+                  <BsFillMoonFill className="fw-bold text-primary fs-6 navbar-nav-scroll" />
+                )}
               </button>
             </div>
           </div>
